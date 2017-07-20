@@ -12,3 +12,6 @@ bin/matpatgwas: code for running maternal, paternal, sex-specific, and standard 
 bin/expression_opposite: code for testing SNPs with gene expression (on CRI)
 
 bin/plotscripts: annotate and plot manhattan and QQ plots for association studies on CRI (on CRI)
+
+
+Manuscript Preprint: [Parent of Origin Effects on Quantitative Phenotypes in a Founder Population](http://www.biorxiv.org/content/early/2017/06/14/150185)
