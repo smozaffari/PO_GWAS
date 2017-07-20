@@ -17,4 +17,10 @@ module load plink
 module load gemma
 
 echo "Rscript ../../../bin/poscripts/phenotype_all.R $PHENOTYPEFILE  $PHEN $COV"
-Rscript ../../../bin/poscripts/phenotype_all.R $PHENOTYPEFILE  $PHEN $COV
+Rscript ../../../bin/matpatgwas/phenotype_all.R $PHENOTYPEFILE  $PHEN $COV
+
+rm ${PHEN}_maternal.*
+rm ${PHEN}_paternal.*
+rm maternal_imputed_${PHEN}*
+rm paternal_imputed_${PHEN}*
+rm *cov.txt

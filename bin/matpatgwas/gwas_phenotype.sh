@@ -17,5 +17,9 @@ module load plink
 module load gemma
 
 echo "Rscript ../../../bin/poscripts/phenotype_gwas.R $PHENOTYPEFILE $PHEN $COV"
-Rscript ../../../bin/poscripts/phenotype_gwas.R $PHENOTYPEFILE $PHEN $COV
+Rscript ../../../bin/matpatgwas/phenotype_gwas.R $PHENOTYPEFILE $PHEN $COV
 #age__agesexgrp1__agesexgrp2__agesexgrp1_age__agesexgrp2_age
+
+
+rm ${PHENO}_gwas2.*
+rm gwas_imputed_${PHENO}2.*
