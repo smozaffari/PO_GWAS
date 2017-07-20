@@ -1,0 +1,47 @@
+#!/bin/bash
+#PBS -l mppwidth=32
+#PBS -l walltime=01:00:00
+#PBS -j oe 
+#PBS -N test
+#PBS -A CI-MCB000155
+
+# Author: Sahar Mozaffari
+# Date:
+# Purpose: aprun format.sh to correctly format files.
+# Usage: look at that masterscript.sh for how to run
+# Notes: input and output files writen to /tmp/sm
+
+
+set -x
+
+echo $PBS_O_WORKDIR
+cd $PBS_O_WORKDIR/$PHENO
+echo $PBS_O_WORKDIR/$PHENO
+
+. /opt/modules/default/init/bash
+if [ ! $(module list -t 2>&1 | grep PrgEnv-gnu) ]; then
+ module swap PrgEnv-cray PrgEnv-gnu
+fi
+
+export R_LIBS="/lustre/beagle2/ober/users/smozaffari/R_libs"
+module load R/3.1.2
+module load python/2.7.6-vanilla
+
+umask 022
+
+echo "%%% Begin at " $(date)
+export WHOAMI=$(whoami)
+echo "Submitted as:" $WHOAMI
+echo "running jobs in "$PWD
+echo "$SCRIPTDIR"
+echo "$PHENO"
+echo "$FILE"
+echo "$NUM"
+
+mkdir -p $PBS_O_WORKDIR/${PHENO}_newmodel
+cd $PBS_O_WORKDIR/${PHENO}_newmodel
+mkdir -p {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22}/{output,segments}
+
+aprun -n1 -N1 -d 32 $SCRIPTDIR/format.sh $SCRIPTDIR $PHENO $FILE $NUM &
+
+wait
