@@ -1,15 +1,18 @@
 This folder/file was made to run opposite effect GWAS on one SNP/one phenotype at a time.
 
 Code written in R. 
+
 Need to have plink loaded to extract SNP from genotype files.
+
 Used GEMMA (BIMBAM format) for association analyses.
 
-Run:
 
-Rscript newmodel_onephenotype.R {chr} {snpname} {phenotype} {pathtofamfilewithphenotypes}
+
+To Run:   `Rscript newmodel_onephenotype.R {chr} {snpname} {phenotype} {pathtofamfilewithphenotypes}`
 
 
 ###  1. Need plink files with genotypes
+
       - each individual has two ids in the plink files, one for maternal genotype and one for paternal genotype. 
             - ex. individual 1 has A from mom and C from dad, in plink file, 
                there will be two ids for individual 1: 12 and 11, where 12 has genotype A A and 11 has genotype C C 
@@ -18,7 +21,8 @@ Rscript newmodel_onephenotype.R {chr} {snpname} {phenotype} {pathtofamfilewithph
       -  plink bfiles are separated into paternal and maternal (mine named recode_mat_chr_{chr}_{phen}) (line #33 & #34)
 
 
-###  2. {pathtofamfilewithphenotypes} is a separate fam file that has phenotypes 
+###  2. {pathtofamfilewithphenotypes} is a separate fam file that has phenotypes ###
+
         - (mine named {phen}_{chr}_maternal.fam} with maternal ids.
         - to make BIMBAM phenotype file to run association in GEMMA (rows = individuals, columns = phenotypes) :
         
