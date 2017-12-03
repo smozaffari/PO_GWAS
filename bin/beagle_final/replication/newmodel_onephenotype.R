@@ -3,9 +3,10 @@
 # Purpose: run newmodel to test for difference in PO effects - made to make replication easier (one snp, one phenotype at a time).
 # Files format : plink files with genotypes: each individual has two ids in the plink files, one for maternal genotype and one for paternal genotype. 
 #               ex. individual 1 has A from mom and C from dad, in plink file, there will be two ids for individual 1: 12 and 11, where 12 has genotype A A and 11 has genotype C C (coded as diploid).
-#               plink bfiles are separated into paternal and maternal (mine named recode_mat_chr_{chr}_{phen}) (line #34)
-#               Separate fam file that has phenotypes (mine named {phen}_{chr}_maternal.fam} with maternal ids.
-# Usage: run 
+#               plink bfiles are separated into paternal and maternal (mine named recode_mat_chr_{chr}_{phen}) (line #33/34)
+#               Separate fam file that has phenotypes (mine named {phen}_maternal.fam} with maternal ids.
+
+# Usage: Rscript newmodel_onephenotype.R {chr} {snpname} {phenotype} {pathtofamfilewithphenotypes}
 
 
 
@@ -15,7 +16,7 @@ chr <- args[1] #chr testing
 snp <- args[2]
 phen <- args[3] #phenotype name
 pathtophenfam <- args[4] #path to fam file that has phenotypes. Only used maternal.fam here. 
-#ex. pathtophenfam <- paste("/tmp/sm/",phen,"_",chr,"_maternal.fam", sep="")
+#ex. pathtophenfam <- paste("/tmp/sm/",phen,"_maternal.fam", sep="")
 
 #set working directory as needed. 
 print(getwd())
@@ -29,7 +30,7 @@ print(snp);
 snp
 
 #recode plink files
-system(paste("plink-1.9 --file recode_mat_chr_",chr,"_",phen," --snp ", snp, " --silent  --recode 12 --out snp_recode_mat",snp, sep = ""))
+system(paste("plink-1.9 --file recode_mat_chr_",chr,"_",phen," --snp ", snp, " --silent --recode 12 --out snp_recode_mat",snp, sep = ""))
 system(paste("plink-1.9 --file recode_pat_chr_",chr,"_",phen," --snp ", snp, " --silent --recode 12 --out snp_recode_pat",snp, sep = ""))
 
 #read genotype files
