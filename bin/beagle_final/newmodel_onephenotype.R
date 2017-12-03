@@ -14,8 +14,7 @@ args <- commandArgs(trailingOnly = TRUE)
 chr <- args[1] #chr testing
 snp <- args[2]
 phen <- args[3] #phenotype name
-file <- args[4] #path to fam file. 
-pathtophenfam <- args[5] #path to fam file that has phenotypes. Only used maternal.fam here. 
+pathtophenfam <- args[4] #path to fam file that has phenotypes. Only used maternal.fam here. 
 #ex. pathtophenfam <- paste("/tmp/sm/",phen,"_",chr,"_maternal.fam", sep="")
 
 #set working directory as needed. 
