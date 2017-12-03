@@ -24,7 +24,6 @@ print(getwd())
 #read in fam file with phenotype of interest
 fam <- read.table(pathtophenfam, comment.char = "")
 
-tab <- fam
 
 #modified to run only one snp
 print(snp);
@@ -69,6 +68,6 @@ covariatesdiff[!!rowSums(is.na(covariatesdiff)),] <- NA
 write.table(covariatesdiff, paste("cov_age_sex_diffXmp_",phen,"_",snp, ".txt",sep=""), quote = F, row.names = F, col.names = F)
 
 # run association using GEMMA, using bimbam files: genotype is coded as the difference, phenotype is phenotype being tested, relatedness matrix and covariates (avg genotype) specified. Also used -notsnp flag. 
-system(paste("/lustre/beagle2/ober/resources/opt/bin/gemma -g diffXmp_",phen,"_", snp, ".txt -p phen_", phen, ".txt -n ",p," -k ",phen,"relatedness -lmm 4 -notsnp -c cov_age_sex_diffXmp_",phen,"_",snp,".txt -o ",p,"_",pheno[p],"_",chr,"_",snp,"_",phen, "_bimbam_difference_allcovs ", sep = ""), wait = T)
+system(paste("/lustre/beagle2/ober/resources/opt/bin/gemma -g diffXmp_",phen,"_", snp, ".txt -p phen_", phen, ".txt  -k ",phen,"relatedness -lmm 4 -notsnp -c cov_age_sex_diffXmp_",phen,"_",snp,".txt -o ",p,"_",pheno[p],"_",chr,"_",snp,"_",phen, "_bimbam_difference_allcovs ", sep = ""), wait = T)
 
 
