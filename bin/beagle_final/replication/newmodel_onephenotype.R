@@ -38,8 +38,9 @@ mat12 <- read.table(paste("snp_recode_mat",snp,".ped", sep = ""))
 pat12 <- read.table(paste("snp_recode_pat",snp,".ped", sep = ""))
 
 #sort them to keep every file consistent
-matk_order <- mat12[match(fam$V2, matkeep12$V2),] 
-patk_order <- pat12[match(fam$V2, matkeep12$V2),] 
+matk_order <- mat12[match(fam$V2, mat12$V2),] 
+patk_order <- pat12[match(fam$V2, mat12$V2),] 
+# the paternal file is reordered to match the fam file to the maternal file, because the fam file has maternally coded findivs (with an extra 2 at the end of the id)
 
 #average parental genotype 
 matk_order[matk_order==0] <- NA
@@ -67,7 +68,13 @@ covariatesdiff <- cbind("1", new)
 covariatesdiff[!!rowSums(is.na(covariatesdiff)),] <- NA
 write.table(covariatesdiff, paste("cov_age_sex_diffXmp_",phen,"_",snp, ".txt",sep=""), quote = F, row.names = F, col.names = F)
 
-# run association using GEMMA, using bimbam files: genotype is coded as the difference, phenotype is phenotype being tested, relatedness matrix and covariates (avg genotype) specified. Also used -notsnp flag. 
-system(paste("/lustre/beagle2/ober/resources/opt/bin/gemma -g diffXmp_",phen,"_", snp, ".txt -p phen_", phen, ".txt  -k ",phen,"relatedness -lmm 4 -notsnp -c cov_age_sex_diffXmp_",phen,"_",snp,".txt -o ",p,"_",pheno[p],"_",chr,"_",snp,"_",phen, "_bimbam_difference_allcovs ", sep = ""), wait = T)
 
+# pheno is the vector of phenotypes to run. If you only have one, you can define it and then no need to loop through the file for the association analyses
+pheno <- c("mono", "BRI", "chitin", "cimt", "diastolic", "eos", "feNO", "fev1", "fev1fvc", "HDL", "height", "Ige", "LAVI", "LDL", "BMI", "LVMI", "lymph", "menarche", "neutro", "systolic", "totalchol", "trig,", "YKL")
+# loop through all phenotypes to get output files
+
+for (p in 1:length(pheno)){
+# run association using GEMMA, using bimbam files: genotype is coded as the difference, phenotype is phenotype being tested, relatedness matrix and covariates (avg genotype) specified. Also used -notsnp flag. 
+    system(paste("/lustre/beagle2/ober/resources/opt/bin/gemma -g diffXmp_",phen,"_", snp, ".txt -p phen_", phen, ".txt  -k ",phen,"relatedness -lmm 4 -notsnp -c cov_age_sex_diffXmp_",phen,"_",snp,".txt -o ",p,"_",pheno[p],"_",chr,"_",snp,"_",phen, "_bimbam_difference_allcovs ", sep = ""), wait = T)
+}
 
